@@ -20,3 +20,10 @@ jobs:
         AWS_REGION: 'eu-west-1'   # optional: defaults to us-east-1
         SOURCE_DIR: 'MarketingDrive'      # optional: defaults to entire repository
         DEST_DIR: 'MarketingDrive'        # optional: defaults to root of bucket
+gitavscan:
+  runs-on: ubuntu-latest
+  name: AV scan
+  steps:
+  - uses: actions/checkout@v2
+  - name: Git AV Scan
+    uses: djdefi/gitavscan@main
