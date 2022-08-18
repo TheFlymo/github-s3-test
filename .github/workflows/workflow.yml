@@ -6,26 +6,18 @@ on:
     - main
 
 jobs:
-  gitavscan:
-    runs-on: ubuntu-latest
-    name: AV scan
-    steps:
-    - uses: actions/checkout@v2
-    - name: Git AV Scan
-      uses: djdefi/gitavscan@main
   deploy:
-    needs: gitavscan
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
       with:
-        args: --acl public-read --follow-symlinks --delete --exclude '.git/*'
+        args: --follow-symlinks --delete --exclude '.git/*'
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'eu-west-1'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'MarketingDrive'      # optional: defaults to entire repository
-        DEST_DIR: 'MarketingDrive'        # optional: defaults to root of bucket
+        SOURCE_DIR: 'content'      # optional: defaults to entire repository
+        DEST_DIR: 'content'        # optional: defaults to root of bucket
 
